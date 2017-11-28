@@ -16,20 +16,20 @@ class CreateRooms extends AbstractMigration
         $table->addColumn('name', 'string', [
             'default' => null,
             'limit' => 255,
-            'null' => false,
+            'null' => true,
         ]);
         $table->addColumn('capacity', 'integer', [
             'default' => null,
             'limit' => 11,
-            'null' => false,
+            'null' => true,
         ]);
-                $table->addColumn('created', 'datetime', [
+        $table->addColumn('created', 'datetime', [
             'default' => null,
-            'null' => false,
+            'null' => true,
         ]);
         $table->addColumn('modified', 'datetime', [
             'default' => null,
-            'null' => false,
+            'null' => true,
         ]);
         $table->create();
     }
