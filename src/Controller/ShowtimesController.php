@@ -19,6 +19,7 @@ class ShowtimesController extends AppController
      */
     public function index()
     {
+        $this->paginate = ['contain' =>['Movies','Rooms']];
         $showtimes = $this->paginate($this->Showtimes);
 
         $this->set(compact('showtimes'));
@@ -59,7 +60,9 @@ class ShowtimesController extends AppController
             }
             $this->Flash->error(__('The showtime could not be saved. Please, try again.'));
         }
-        $this->set(compact('showtime'));
+        $rooms = $this->Showtimes->Rooms->find('List');
+        $movies = $this->Showtimes->Movies->find('List');
+        $this->set(compact('showtime','rooms','movies'));
         $this->set('_serialize', ['showtime']);
     }
 
