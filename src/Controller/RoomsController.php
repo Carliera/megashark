@@ -40,6 +40,17 @@ class RoomsController extends AppController
 
         $this->set('room', $room);
         $this->set('_serialize', ['room']);
+        
+        $query = $this->Roomss
+        ->find()
+        ->select(['name', 'start'])
+        ->from(['movies'],['showtimes'])
+        ->where(['showtimes.room_id=$this.id'],['movies.id=showtimes.movie_id']);
+        
+        foreach ($query as $article) {
+            debug($article->created);
+}
+        
     }
 
     /**
