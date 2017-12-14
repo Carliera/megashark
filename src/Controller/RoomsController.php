@@ -2,6 +2,9 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
+use Cake\I18n\Time;
+
 
 /**
  * Rooms Controller
@@ -34,22 +37,42 @@ class RoomsController extends AppController
      */
     public function view($id = null)
     {
-        $room = $this->Rooms->get($id, [
-            'contain' => []
-        ]);
+        
+        
+        
+       /* $movies = $this->Rooms->Showtimes->Movies
+        ->find()
+        ->select(['name'])
+        ->where(['id'=>$showtime])*
+        ;*/
+        //new Time('sunday this week');
+        $room = $this->Rooms
+        ->get($id);
+        
+        $showtime = $this->Rooms->Showtimes
+        ->find()
+        ->contain(['Movies'])
+        //->select(['movie.name'])
+        ->where(['room_id' => $id])
+        ;
+        
+        //$test = $this->Rooms->Showtimes->movie->name;
+        
 
+        /*$room = TableRegistry::get('rooms')
+        ->find()
+        ->where(['start >=' => new Time()]);*/
+        
+       /* $query = $this->Rooms
+        ->get($id, ['contain' => ['showtimes']]
+        ->find()
+        ->where(['start >=' => new Time()]));*/
+        
         $this->set('room', $room);
         $this->set('_serialize', ['room']);
+        $this->set('showtime',$showtime);
+        //$this->set('movies',$movies);
         
-        $query = $this->Roomss
-        ->find()
-        ->select(['name', 'start'])
-        ->from(['movies'],['showtimes'])
-        ->where(['showtimes.room_id=$this.id'],['movies.id=showtimes.movie_id']);
-        
-        foreach ($query as $article) {
-            debug($article->created);
-}
         
     }
 
